@@ -837,17 +837,10 @@ pub mod ed25519_precompile_verify_strict {
     solana_sdk::declare_id!("ed9tNscbWLYBooxWA7FE2B5KHWs8A6sxfY8EzezEcoo");
 }
 
-<<<<<<< HEAD
-=======
-pub mod vote_only_retransmitter_signed_fec_sets {
-    solana_sdk::declare_id!("RfEcA95xnhuwooVAhUUksEJLZBF7xKCLuqrJoqk4Zph");
-}
-
 pub mod enable_turbine_extended_fanout_experiments {
     solana_sdk::declare_id!("BZn14Liea52wtBwrXUxTv6vojuTTmfc7XGEDTXrvMD7b");
 }
 
->>>>>>> 57144b0cea (extends Turbine fanout experiment to wider fanout values (#2373))
 lazy_static! {
     /// Map of feature identifiers to user-visible description
     pub static ref FEATURE_NAMES: HashMap<Pubkey, &'static str> = [
@@ -1052,11 +1045,7 @@ lazy_static! {
         (zk_elgamal_proof_program_enabled::id(), "Enable ZkElGamalProof program SIMD-0153"),
         (move_stake_and_move_lamports_ixs::id(), "Enable MoveStake and MoveLamports stake program instructions #1610"),
         (ed25519_precompile_verify_strict::id(), "Use strict verification in ed25519 precompile SIMD-0152"),
-<<<<<<< HEAD
-=======
-        (vote_only_retransmitter_signed_fec_sets::id(), "vote only on retransmitter signed fec sets"),
-        (enable_turbine_extended_fanout_experiments::id(), "enable turbine extended fanout experiments #"),
->>>>>>> 57144b0cea (extends Turbine fanout experiment to wider fanout values (#2373))
+        (enable_turbine_extended_fanout_experiments::id(), "enable turbine extended fanout experiments #2373"),
         /*************** ADD NEW FEATURES HERE ***************/
     ]
     .iter()
