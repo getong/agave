@@ -817,27 +817,7 @@ pub mod layout {
             .ok_or(Error::InvalidPayloadSize(shred.len()))
     }
 
-<<<<<<< HEAD
-    pub(crate) fn set_retransmitter_signature(
-=======
-    pub fn is_retransmitter_signed_variant(shred: &[u8]) -> Result<bool, Error> {
-        match get_shred_variant(shred)? {
-            ShredVariant::LegacyCode | ShredVariant::LegacyData => Ok(false),
-            ShredVariant::MerkleCode {
-                proof_size: _,
-                chained: _,
-                resigned,
-            } => Ok(resigned),
-            ShredVariant::MerkleData {
-                proof_size: _,
-                chained: _,
-                resigned,
-            } => Ok(resigned),
-        }
-    }
-
     pub fn set_retransmitter_signature(
->>>>>>> ff87ed9187 (gossip: ignore retransmitter signatures when comparing duplicate shreds (#2673))
         shred: &mut [u8],
         signature: &Signature,
     ) -> Result<(), Error> {
