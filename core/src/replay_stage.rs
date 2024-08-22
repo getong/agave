@@ -9454,7 +9454,7 @@ pub(crate) mod tests {
 
     #[test]
     #[should_panic(expected = "Additional duplicate confirmed notification for slot 6")]
-    fn test_mark_slots_duplicate_confirmed() {
+    fn test_mark_slots_confirmed() {
         let generate_votes = |pubkeys: Vec<Pubkey>| {
             pubkeys
                 .into_iter()
@@ -9481,8 +9481,8 @@ pub(crate) mod tests {
             .unwrap();
 
         // Mark 0 as duplicate confirmed, should fail as it is 0 < root
-        let confirmed_slots = [(0, bank_hash_0)];
-        ReplayStage::mark_slots_duplicate_confirmed(
+        let confirmed_slots = [ConfirmedSlot::new_duplicate_confirmed_slot(0, bank_hash_0)];
+        ReplayStage::mark_slots_confirmed(
             &confirmed_slots,
             &blockstore,
             &bank_forks,
@@ -9500,9 +9500,9 @@ pub(crate) mod tests {
 
         // Mark 5 as duplicate confirmed, should suceed
         let bank_hash_5 = bank_forks.read().unwrap().bank_hash(5).unwrap();
-        let confirmed_slots = [(5, bank_hash_5)];
+        let confirmed_slots = [ConfirmedSlot::new_duplicate_confirmed_slot(5, bank_hash_5)];
 
-        ReplayStage::mark_slots_duplicate_confirmed(
+        ReplayStage::mark_slots_confirmed(
             &confirmed_slots,
             &blockstore,
             &bank_forks,
@@ -9523,9 +9523,12 @@ pub(crate) mod tests {
 
         // Mark 5 and 6 as duplicate confirmed, should succeed
         let bank_hash_6 = bank_forks.read().unwrap().bank_hash(6).unwrap();
-        let confirmed_slots = [(5, bank_hash_5), (6, bank_hash_6)];
+        let confirmed_slots = [
+            ConfirmedSlot::new_duplicate_confirmed_slot(5, bank_hash_5),
+            ConfirmedSlot::new_duplicate_confirmed_slot(6, bank_hash_6),
+        ];
 
-        ReplayStage::mark_slots_duplicate_confirmed(
+        ReplayStage::mark_slots_confirmed(
             &confirmed_slots,
             &blockstore,
             &bank_forks,
@@ -9549,8 +9552,11 @@ pub(crate) mod tests {
             .unwrap_or(false));
 
         // Mark 6 as duplicate confirmed again with a different hash, should panic
-        let confirmed_slots = [(6, Hash::new_unique())];
-        ReplayStage::mark_slots_duplicate_confirmed(
+        let confirmed_slots = [ConfirmedSlot::new_duplicate_confirmed_slot(
+            6,
+            Hash::new_unique(),
+        )];
+        ReplayStage::mark_slots_confirmed(
             &confirmed_slots,
             &blockstore,
             &bank_forks,
